@@ -2,10 +2,10 @@
   "referenceGuide":"Cite all the reference sources in the required format. Proper citations will help you avoid unnecessary trouble but does not make it acceptable to copy code. Read the course and university policy statements in this regard. When working with others, limit the discussion to block diagrams and arrows. Do not look at another students' code. Read the JSON semantics and make use of JSON validator from the Internet if needed.",
   "websites":[
     {
-      "title":"<title of the page>",
-      "url":"<url>",
-      "code":"<explain in which part of your code did you use the snippet or idea>",
-      "description":"<additional information you may find necessary to provide>"
+      "title":"nginx:1.15.3-alpine",
+      "url":"https://github.com/docker-library/repo-info/blob/master/repos/nginx/local/1.15.3-alpine.md",
+      "code":"Command: ["nginx", "-g", "daemon off;"]",
+      "description":"This let me able to keep the docker running after execute run command"
     }
   ],
   "collaborators":[
