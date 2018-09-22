@@ -1,0 +1,42 @@
+{
+  "referenceGuide":"Cite all the reference sources in the required format. Proper citations will help you avoid unnecessary trouble but does not make it acceptable to copy code. Read the course and university policy statements in this regard. When working with others, limit the discussion to block diagrams and arrows. Do not look at another students' code. Read the JSON semantics and make use of JSON validator from the Internet if needed.",
+  "websites":[
+    {
+      "title":"Capturing stderr and exceptions from python in org-mode",
+      "url":"http://kitchingroup.cheme.cmu.edu/blog/2013/09/27/Capturing-stderr-and-exceptions-from-python-in-org-mode/",
+      "code":"",
+      "description":"I learned how to redirect stdout and stderr to a string."
+    },
+    {
+      "title":"Implementing a RESTful Web API with Python & Flask",
+      "url":"http://blog.luisrei.com/articles/flaskrest.html",
+      "code":"",
+      "description":"I learned how to create a json response ensure that its header is application/json."
+    },
+    {
+      "title":"fnndsc/ubuntu-python3",
+      "url":"https://hub.docker.com/r/fnndsc/ubuntu-python3/~/dockerfile/",
+      "code":"",
+      "description":"I learned how to specify dependency for running a python script in Dockerfile."
+    },
+    {
+      "title":"Dockerize Simple Flask App",
+      "url":"http://containertutorials.com/docker-compose/flask-simple-app.html",
+      "code":"in the Dockerfile section",
+      "description":"I learned how to install flask in Dockerfile."
+    },
+    {
+      "title":"subprocess — Subprocess management",
+      "url":"https://docs.python.org/3/library/subprocess.html",
+      "code":"subprocess.PIPE",
+      "description":"I learned how to get the stderr from executing a python script."
+    }
+  ],
+  "collaborators":[
+    {
+      "andrewId":"<collaborator andrewId>",
+      "collaborationType":"<I helped X, X helped me, or we helped each other>",
+      "description":"<describe the idea discussed or shared>"
+    }
+  ]
+}
