@@ -3,8 +3,8 @@ import requests
 import logging
 import json
 
-# pythonServiceHostName = "http://35.231.57.25/py/eval"
-pythonServiceHostName = "http://project22task3-frontend:80/py/eval"
+# pythonServiceHostName = "http://35.185.94.101/py/eval"
+pythonServiceHostName = "http://project22task3:80/py/eval"
 
 app = Flask(__name__, static_folder='site', static_url_path='')
 
@@ -17,8 +17,6 @@ def handle():
 @app.route("/python", methods=['GET', 'POST'])
 def handlePython():
     if request.method == 'POST':
-        if request.headers['Content-Type'] == 'multipart/form-data':
-            code = request.form['code']
 
         # This should return the stdout and stderr in json format
         # return the exact response from pyService.py only!
@@ -26,6 +24,12 @@ def handlePython():
         # request.form and request.json
         if request.headers['Content-Type'] == 'application/json':
             code = request.json['code']
+        else:
+            code = request.form['code']
+        # if request.json is None:
+        #     code = request.form['code']
+        # else:
+        #     code = request.json['code']
 
         req_body = {"code": code}
         res = requests.post(pythonServiceHostName,

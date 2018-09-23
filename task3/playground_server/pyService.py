@@ -19,7 +19,9 @@ def handle():
         # Both stdout and stderr should be captured.
         # {"stdout": "<output_from_stdout>", "stderr": "<output_from_stderr>"}
 
-        code = request.json['code']
+        # code = request.json['code']
+        received_data = request.get_json()
+        code = received_data['code']
 
         code_file = open("code.py", "w+")
         code_file.write(code)
