@@ -8,30 +8,30 @@
 kind: Deployment
 apiVersion: extensions/v1beta1
 metadata:
-  name:
+  name: project22task5-gke
   labels:
-    app:
+    app: task5-gke
 # You should complete this spec field based on the deployment spec defined in:
 # https://v1-8.docs.kubernetes.io/docs/concepts/workloads/controllers/deployment/
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app:
+      app: task5-gke
   template:
     metadata:
       labels:
-        app: 
-      namespace: 
+        app: task5-gke
+      namespace:
     spec:
       containers:
-        - name: 
-          image: 
+        - name: task5-gke-app
+          image: gcr.io/nimble-radio-214818/task5:server
           ports:
-          - containerPort:
+          - containerPort: 6000
           resources:
             requests:
-              cpu:
+              cpu: "100m"
 ---
 # For this task, you should have one deployment for the frontend code execution UI
 # so the number of replications can be increased / decreased independently.
@@ -41,30 +41,30 @@ spec:
 kind: Deployment
 apiVersion: extensions/v1beta1
 metadata:
-  name:
+  name: project22task5-gke-frontend
   labels:
-    app:
+    app: task5-gke-frontend
 # You should complete this spec field based on the deployment spec defined in:
 # https://v1-8.docs.kubernetes.io/docs/concepts/workloads/controllers/deployment/
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app:
+      app: task5-gke-frontend
   template:
     metadata:
       labels:
-        app: 
-      namespace: 
+        app: task5-gke-frontend
+      namespace:
     spec:
       containers:
-        - name: 
-          image: 
+        - name: task5-gke-frontend
+          image: gcr.io/nimble-radio-214818/task5:ui
           ports:
-          - containerPort:
+          - containerPort: 5000
           resources:
             requests:
-              cpu:
+              cpu: "100m"
 ---
 # A service is an abstraction that enables traffic to be routed from the network to a
 # specific pod. This service should double as a Load Balancer.
@@ -76,32 +76,32 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name:
+  name: project22task5-gke
   labels:
-    app:
+    app: task5-gke
 # Complete the service spec based on the documentation provided in:
 #    https://v1-8.docs.kubernetes.io/docs/api-reference/v1.8/#service-v1-core
 spec:
-  selector: 
-    app: 
+  selector:
+    app: task5-gke
   ports:
-  - port: 
-    targetPort: 
-  type:
+  - port: 80
+    targetPort: 6000
+  type: LoadBalancer
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name:
+  name: project22task5-gke-frontend
   labels:
-    app:
+    app: task5-gke-frontend
 spec:
-  selector: 
-    app: 
+  selector:
+    app: task5-gke-frontend
   ports:
-  - port: 
-    targetPort: 
-  type:
+  - port: 80
+    targetPort: 5000
+  type: LoadBalancer
 ---
 # For this task you will need to define autoscaling rules pers the write up
 # to ensure that the backend pod does not exceed a certain cpu utilization.
@@ -110,20 +110,21 @@ spec:
 apiVersion: autoscaling/v2beta1
 kind: HorizontalPodAutoscaler
 metadata:
-  name: 
+  name: task5-gke-hpa
   namespace: default
 spec:
   scaleTargetRef:
-    apiVersion: apps/v1beta1
-    kind: 
-    name: 
-  minReplicas: 
-  maxReplicas: 
+    apiVersion: extensions/v1beta1
+    kind: Deployment
+    name: project22task5-gke
+  minReplicas: 1
+  maxReplicas: 5
   metrics:
   - type: Resource
     resource:
       name: cpu
-      targetAverageUtilization:
+      targetAverageUtilization: 50
+---
 # For this task you will need to define autoscaling rules pers the write up
 # to ensure that the frontend pod does not exceed a certain cpu utilization.
 #
@@ -131,17 +132,17 @@ spec:
 apiVersion: autoscaling/v2beta1
 kind: HorizontalPodAutoscaler
 metadata:
-  name: 
+  name: task5-gke-frontend-hpa
   namespace: default
 spec:
   scaleTargetRef:
-    apiVersion: apps/v1beta1
-    kind: 
-    name: 
-  minReplicas: 
-  maxReplicas: 
+    apiVersion: extensions/v1beta1
+    kind: Deployment
+    name: project22task5-gke-frontend
+  minReplicas: 1
+  maxReplicas: 5
   metrics:
   - type: Resource
     resource:
       name: cpu
-      targetAverageUtilization:
+      targetAverageUtilization: 50

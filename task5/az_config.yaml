@@ -8,31 +8,31 @@
 kind: Deployment
 apiVersion: extensions/v1beta1
 metadata:
-  name:
+  name: project22task5
   labels:
-    app:
+    app: task5
 # You should complete this spec field based on the deployment spec defined in:
 # https://v1-8.docs.kubernetes.io/docs/concepts/workloads/controllers/deployment/
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app:
+      app: task5
   template:
     metadata:
       labels:
-        app: 
-      namespace: 
+        app: task5
+      namespace:
     spec:
       containers:
-        - name: 
-          image: 
+        - name: task5-app
+          image: wenhetask5registry.azurecr.io/task5:server
           ports:
-          - containerPort:
+          - containerPort: 6000
           resources:
             requests:
-              cpu:
---
+              cpu: "100m"
+---
 # A service is an abstraction that enables traffic to be routed from the network to a
 # specific pod. This service should double as a Load Balancer.
 # https://kubernetes.io/docs/concepts/services-networking/service/
@@ -43,18 +43,18 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name:
+  name: project22task5
   labels:
-    app:
+    app: task5
 # Complete the service spec based on the documentation provided in:
 # https://v1-8.docs.kubernetes.io/docs/api-reference/v1.8/#service-v1-core
 spec:
-  selector: 
-    app: 
+  selector:
+    app: task5
   ports:
-  - port: 
-    targetPort: 
-  type:
+  - port: 80
+    targetPort: 6000
+  type: LoadBalancer
 ---
 # For this task you will need to define autoscaling rules pers the write up
 # to ensure that the backend pod does not exceed a certain cpu utilization.
@@ -63,17 +63,17 @@ spec:
 apiVersion: autoscaling/v2beta1
 kind: HorizontalPodAutoscaler
 metadata:
-  name: 
+  name: task5-hpa
   namespace: default
 spec:
   scaleTargetRef:
-    apiVersion: apps/v1beta1
-    kind: 
-    name: 
-  minReplicas: 
-  maxReplicas: 
+    apiVersion: extensions/v1beta1
+    kind: Deployment
+    name: project22task5
+  minReplicas: 1
+  maxReplicas: 5
   metrics:
   - type: Resource
     resource:
       name: cpu
-      targetAverageUtilization:
+      targetAverageUtilization: 50
