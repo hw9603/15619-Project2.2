@@ -20,8 +20,12 @@ def handle():
         # {"stdout": "<output_from_stdout>", "stderr": "<output_from_stderr>"}
 
         # code = request.json['code']
-        received_data = request.get_json()
-        code = received_data['code']
+        # received_data = request.get_json()
+        # code = received_data['code']
+        if request.headers['Content-Type'] == 'application/json':
+            code = request.json['code']
+        else:
+            code = request.form['code']
 
         code_file = open("code.py", "w+")
         code_file.write(code)
